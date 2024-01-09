@@ -20,14 +20,15 @@ export const calculateTotalNutrientsAmounts = (
   fats: number;
   carbs: number;
 } => {
-  const multiplier = product.type === 'piece' ? amount : amount / 100;
+  const multiplier =
+    product.type === 'piece' ? amount : _.round(amount / 100, 2);
 
   return _.chain(product)
     .pick(['protein', 'fats', 'carbs'])
     .transform(
       (result, value, key) => {
         // @ts-expect-error не сходятся типы
-        result[key] = value * multiplier;
+        result[key] = _.round(value * multiplier, 2);
       },
       { protein: 0, fats: 0, carbs: 0 },
     )

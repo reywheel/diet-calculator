@@ -1,4 +1,9 @@
 import {
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Table,
   TableContainer,
   Tbody,
@@ -8,13 +13,16 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { useProductsAmounts } from '../../model/calculatorStore.ts';
+import {
+  useActions as useCalculatorActions,
+  useProductsAmounts,
+} from '../../model/calculatorStore.ts';
 import { useMemo } from 'react';
 import _ from 'lodash';
 import {
   calculateTotalNutrientsAmounts,
   IProduct,
-  useActions,
+  useActions as useProductActions,
 } from '@/entities/product';
 import { useCarbs, useFats, useProtein } from '@/features/configureProfile';
 
@@ -23,7 +31,8 @@ export const Calculator = () => {
   const protein = useProtein();
   const fats = useFats();
   const carbs = useCarbs();
-  const { getProductById } = useActions();
+  const { getProductById } = useProductActions();
+  const { setAmount } = useCalculatorActions();
 
   const preparedData = useMemo(() => {
     return _.transform(
@@ -45,9 +54,9 @@ export const Calculator = () => {
         const amounts = calculateTotalNutrientsAmounts(product, amount);
 
         return {
-          protein: acc.protein + amounts.protein,
-          fats: acc.fats + amounts.fats,
-          carbs: acc.carbs + amounts.carbs,
+          protein: _.round(acc.protein + amounts.protein, 2),
+          fats: _.round(acc.fats + amounts.fats, 2),
+          carbs: _.round(acc.carbs + amounts.carbs, 2),
         };
       },
       { protein: 0, fats: 0, carbs: 0 },
@@ -80,7 +89,22 @@ export const Calculator = () => {
                 <Td isNumeric>{product.protein}</Td>
                 <Td isNumeric>{product.fats}</Td>
                 <Td isNumeric>{product.carbs}</Td>
-                <Td isNumeric>{amount}</Td>
+                <Td isNumeric>
+                  <NumberInput
+                    maxW={100}
+                    min={1}
+                    value={amount}
+                    size={'sm'}
+                    ml={'auto'}
+                    onChange={(v) => setAmount(product.id, +v)}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </Td>
               </Tr>
             ),
           )}
