@@ -11,61 +11,54 @@ import {
   RadioGroup,
   Stack,
 } from '@chakra-ui/react';
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler } from 'react';
 import {
   IProduct,
   IProductType,
   useActions as useProductActions,
 } from '@/entities/product';
-import { nanoid } from 'nanoid';
-import styles from './AddProductForm.module.scss';
+import styles from './EditProductForm.module.scss';
+import {
+  useActions as useEditProductActions,
+  useEditableProduct,
+} from '@/features/editProduct';
 
-export const AddProductForm = () => {
-  const { addProduct } = useProductActions();
+export const EditProductForm = () => {
+  const editableProduct = useEditableProduct();
+  const { setEditableProduct } = useEditProductActions();
+  const { changeProduct } = useProductActions();
 
-  const [name, setName] = useState('');
-  const [type, setType] = useState<IProductType>('gram');
-  const [protein, setProtein] = useState('');
-  const [fats, setFats] = useState('');
-  const [carbs, setCarbs] = useState('');
-
-  const resetFormState = () => {
-    setName('');
-    setType('gram');
-    setProtein('');
-    setFats('');
-    setCarbs('');
+  const onChangeProduct = <T extends keyof IProduct>(
+    field: T,
+    value: IProduct[T],
+  ) => {
+    if (editableProduct)
+      setEditableProduct({ ...editableProduct, [field]: value });
   };
 
   const onClickSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    const newProduct: IProduct = {
-      id: nanoid(),
-      name,
-      type,
-      protein: +protein,
-      fats: +fats,
-      carbs: +carbs,
-    };
+    if (!editableProduct) throw new Error('Нет редактируемого продукта');
 
-    addProduct(newProduct);
-
-    resetFormState();
+    changeProduct(editableProduct);
+    setEditableProduct(null);
   };
+
+  if (!editableProduct) return null;
 
   return (
     <form onSubmit={onClickSubmit}>
       <Stack spacing={6}>
-        <Heading size={'lg'}>Добавление продукта</Heading>
+        <Heading size={'lg'}>Изменение продукта</Heading>
 
         <FormControl>
           <FormLabel>Название</FormLabel>
 
           <Input
-            value={name}
+            value={editableProduct.name}
             variant={'outline'}
-            onChange={(v) => setName(v.target.value)}
+            onChange={(e) => onChangeProduct('name', e.target.value)}
           />
         </FormControl>
 
@@ -74,8 +67,8 @@ export const AddProductForm = () => {
 
           <RadioGroup
             name="form-name"
-            value={type}
-            onChange={(v) => setType(v as IProductType)}
+            value={editableProduct.type}
+            onChange={(v) => onChangeProduct('type', v as IProductType)}
           >
             <Stack
               spacing={5}
@@ -94,9 +87,9 @@ export const AddProductForm = () => {
             <FormLabel>Белки, гр.</FormLabel>
 
             <NumberInput
-              value={protein}
+              value={editableProduct.protein}
               variant={'outline'}
-              onChange={setProtein}
+              onChange={(v) => onChangeProduct('protein', +v)}
             >
               <NumberInputField />
             </NumberInput>
@@ -106,9 +99,9 @@ export const AddProductForm = () => {
             <FormLabel>Жиры, гр.</FormLabel>
 
             <NumberInput
-              value={fats}
+              value={editableProduct.fats}
               variant={'outline'}
-              onChange={setFats}
+              onChange={(v) => onChangeProduct('fats', +v)}
             >
               <NumberInputField />
             </NumberInput>
@@ -118,21 +111,26 @@ export const AddProductForm = () => {
             <FormLabel>Углеводы, гр.</FormLabel>
 
             <NumberInput
-              value={carbs}
+              value={editableProduct.carbs}
               variant={'outline'}
-              onChange={setCarbs}
+              onChange={(v) => onChangeProduct('carbs', +v)}
             >
               <NumberInputField />
             </NumberInput>
           </FormControl>
         </div>
 
-        <Button
-          type={'submit'}
-          colorScheme={'teal'}
-        >
-          Добавить
-        </Button>
+        <div>
+          <Button
+            className={styles.saveButton}
+            type={'submit'}
+            colorScheme={'teal'}
+          >
+            Сохранить
+          </Button>
+
+          <Button onClick={() => setEditableProduct(null)}>Отменить</Button>
+        </div>
       </Stack>
     </form>
   );

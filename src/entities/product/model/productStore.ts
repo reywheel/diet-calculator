@@ -10,6 +10,7 @@ type State = {
 type Actions = {
   actions: {
     addProduct: (p: IProduct) => void;
+    changeProduct: (p: IProduct) => void;
     removeProduct: (id: string) => void;
     getProductById: (id: string) => IProduct | undefined;
   };
@@ -23,6 +24,22 @@ const useProductStore = create<State & Actions>()(
         actions: {
           addProduct: (product) =>
             set((state) => ({ products: [...state.products, product] })),
+          changeProduct: (product) => {
+            const changeableProduct = get().products.find(
+              (p) => p.id === product.id,
+            );
+
+            if (!changeableProduct)
+              throw new Error('Редактируемый продукт не найден');
+
+            const newProducts = get().products.map((p) => {
+              if (p.id !== product.id) return p;
+
+              return { ...p, ...product };
+            });
+
+            set({ products: newProducts });
+          },
           removeProduct: (productId) =>
             set((state) => ({
               products: state.products.filter(

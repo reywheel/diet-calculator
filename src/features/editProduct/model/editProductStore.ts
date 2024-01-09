@@ -8,7 +8,7 @@ type State = {
 
 type Actions = {
   actions: {
-    setEditableProduct: (p: IProduct) => void;
+    setEditableProduct: (p: IProduct | null) => void;
   };
 };
 

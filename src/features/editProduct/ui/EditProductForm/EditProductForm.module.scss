@@ -1,0 +1,9 @@
+.nutrients {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 12px;
+}
+
+.saveButton {
+  margin-right: 8px;
+}
