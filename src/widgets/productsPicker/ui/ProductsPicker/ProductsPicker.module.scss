@@ -1,0 +1,12 @@
+.picker {
+  overflow-y: auto;
+  padding: 0 3px;
+}
+
+.productRow:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.addProductButton {
+  margin-left: auto;
+}
