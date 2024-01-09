@@ -1,12 +1,5 @@
 .wrapper {
-  border: lightgrey solid 1px;
-  border-radius: 5px;
-  padding: 16px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-}
-
-.productRow:not(:last-child) {
-  margin-bottom: 8px;
 }

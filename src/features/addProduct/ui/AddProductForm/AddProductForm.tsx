@@ -28,6 +28,14 @@ export const AddProductForm = () => {
   const [fats, setFats] = useState('');
   const [carbs, setCarbs] = useState('');
 
+  const resetFormState = () => {
+    setName('');
+    setType('gram');
+    setProtein('');
+    setFats('');
+    setCarbs('');
+  };
+
   const onClickSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
@@ -35,14 +43,14 @@ export const AddProductForm = () => {
       id: nanoid(),
       name,
       type,
-      protein: 1,
-      fats: 1,
-      carbs: 2,
+      protein: +protein,
+      fats: +fats,
+      carbs: +carbs,
     };
 
     addProduct(newProduct);
 
-    setName('');
+    resetFormState();
   };
 
   return (
