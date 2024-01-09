@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { createJSONStorage, devtools, persist } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 
 type State = {
   protein: string;
@@ -21,10 +21,7 @@ const useConfigureProfileStore = create<State>()(
         fats: '',
         carbs: '',
       }),
-      {
-        name: 'configureProfileStore',
-        storage: createJSONStorage(() => localStorage),
-      },
+      { name: 'configureProfileStore' },
     ),
     {
       name: 'configureProfileStore',

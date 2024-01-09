@@ -1,3 +1,9 @@
+import { UiContainer, UiPage } from '@/shared/ui';
+
 export const ProductsPage = () => {
-  return <div>products page</div>;
+  return (
+    <UiPage>
+      <UiContainer>productsPage</UiContainer>
+    </UiPage>
+  );
 };
