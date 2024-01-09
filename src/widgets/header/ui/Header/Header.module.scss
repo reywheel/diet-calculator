@@ -5,5 +5,12 @@
 .container {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+}
+
+.calculatorPage {
+  margin-right: 8px;
+}
+
+.productsPage {
+  margin-right: auto;
 }
