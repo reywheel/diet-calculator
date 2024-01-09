@@ -12,6 +12,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { DeleteProductButton } from '@/features/deleteProduct';
 
 export const ProductsList = () => {
   const products = useProducts();
@@ -42,6 +43,7 @@ export const ProductsList = () => {
                 <Th isNumeric>Белки</Th>
                 <Th isNumeric>Жиры</Th>
                 <Th isNumeric>Углеводы</Th>
+                <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -51,6 +53,9 @@ export const ProductsList = () => {
                   <Td isNumeric>{product.protein}</Td>
                   <Td isNumeric>{product.fats}</Td>
                   <Td isNumeric>{product.carbs}</Td>
+                  <Td isNumeric>
+                    <DeleteProductButton productId={product.id} />
+                  </Td>
                 </Tr>
               ))}
             </Tbody>
