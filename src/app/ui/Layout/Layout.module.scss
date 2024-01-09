@@ -2,4 +2,5 @@
   height: 100vh;
   display: grid;
   grid-template-rows: fit-content(60px) 1fr;
+  min-height: 0;
 }
