@@ -63,6 +63,14 @@ export const Calculator = () => {
     );
   }, [preparedData]);
 
+  const isNutrientsEnough = useMemo(() => {
+    return {
+      protein: totalNutrientsAmounts.protein >= +protein,
+      fats: totalNutrientsAmounts.fats >= +fats,
+      carbs: totalNutrientsAmounts.carbs >= +carbs,
+    };
+  }, [totalNutrientsAmounts, protein, fats, carbs]);
+
   return (
     <TableContainer overflowY={'auto'}>
       <Table>
@@ -116,9 +124,28 @@ export const Calculator = () => {
         >
           <Tr>
             <Th>Всего:</Th>
-            <Th isNumeric>{totalNutrientsAmounts.protein}</Th>
-            <Th isNumeric>{totalNutrientsAmounts.fats}</Th>
-            <Th isNumeric>{totalNutrientsAmounts.carbs}</Th>
+
+            <Th
+              isNumeric
+              color={isNutrientsEnough.protein ? 'green' : 'red'}
+            >
+              {totalNutrientsAmounts.protein}
+            </Th>
+
+            <Th
+              isNumeric
+              color={isNutrientsEnough.fats ? 'green' : 'red'}
+            >
+              {totalNutrientsAmounts.fats}
+            </Th>
+
+            <Th
+              isNumeric
+              color={isNutrientsEnough.carbs ? 'green' : 'red'}
+            >
+              {totalNutrientsAmounts.carbs}
+            </Th>
+
             <Th></Th>
           </Tr>
 
