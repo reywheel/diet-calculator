@@ -13,6 +13,7 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import { DeleteProductButton } from '@/features/deleteProduct';
+import { EditProductButton } from '@/features/editProduct';
 
 export const ProductsList = () => {
   const products = useProducts();
@@ -54,7 +55,12 @@ export const ProductsList = () => {
                   <Td isNumeric>{product.fats}</Td>
                   <Td isNumeric>{product.carbs}</Td>
                   <Td isNumeric>
-                    <DeleteProductButton productId={product.id} />
+                    <DeleteProductButton
+                      productId={product.id}
+                      className={styles.deleteButton}
+                    />
+
+                    <EditProductButton productId={product.id} />
                   </Td>
                 </Tr>
               ))}

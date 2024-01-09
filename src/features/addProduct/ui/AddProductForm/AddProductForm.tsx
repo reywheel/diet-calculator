@@ -124,7 +124,12 @@ export const AddProductForm = () => {
           </FormControl>
         </div>
 
-        <Button type={'submit'}>Добавить</Button>
+        <Button
+          type={'submit'}
+          colorScheme={'teal'}
+        >
+          Добавить
+        </Button>
       </Stack>
     </form>
   );

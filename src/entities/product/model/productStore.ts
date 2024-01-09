@@ -1,23 +1,42 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { IProduct } from './types.ts';
+import _ from 'lodash';
 
 type State = {
   products: IProduct[];
 };
 
 type Actions = {
-  addProduct: (p: IProduct) => void;
-  removeProduct: (id: string) => void;
+  actions: {
+    addProduct: (p: IProduct) => void;
+    removeProduct: (id: string) => void;
+    getProductById: (id: string) => IProduct | undefined;
+  };
 };
 
-const useProductStore = create<State>()(
+const useProductStore = create<State & Actions>()(
   devtools(
     persist(
-      () => ({
+      (set, get) => ({
         products: [] as IProduct[],
+        actions: {
+          addProduct: (product) =>
+            set((state) => ({ products: [...state.products, product] })),
+          removeProduct: (productId) =>
+            set((state) => ({
+              products: state.products.filter(
+                (product) => product.id !== productId,
+              ),
+            })),
+          getProductById: (id) =>
+            get().products.find((product) => product.id === id),
+        },
       }),
-      { name: 'productStore' },
+      {
+        name: 'productStore',
+        partialize: (state) => _.pick(state, ['products']),
+      },
     ),
     {
       name: 'productStore',
@@ -28,15 +47,4 @@ const useProductStore = create<State>()(
 
 export const useProducts = () => useProductStore((state) => state.products);
 
-export const useActions = (): Actions => {
-  const store = useProductStore;
-
-  return {
-    addProduct: (product) =>
-      store.setState((state) => ({ products: [...state.products, product] })),
-    removeProduct: (productId) =>
-      store.setState((state) => ({
-        products: state.products.filter((product) => product.id !== productId),
-      })),
-  };
-};
+export const useActions = () => useProductStore((state) => state.actions);
