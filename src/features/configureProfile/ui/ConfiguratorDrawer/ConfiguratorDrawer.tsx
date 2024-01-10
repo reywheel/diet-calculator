@@ -1,35 +1,68 @@
 import {
+  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  FormControl,
+  FormErrorMessage,
   FormLabel,
   NumberInput,
   NumberInputField,
   Stack,
 } from '@chakra-ui/react';
 import {
-  useActions,
-  useCarbs,
-  useFats,
-  useProtein,
-} from '@/features/configureProfile';
+  $protein,
+  $carbs,
+  $fats,
+  setProtein,
+  setFats,
+  setCarbs,
+} from '@/entities/config';
+import { useStore } from '@nanostores/react';
+import { Controller, useForm } from 'react-hook-form';
 
 interface ConfiguratorDrawerProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+type FormData = {
+  protein: string;
+  fats: string;
+  carbs: string;
+};
+
 export const ConfiguratorDrawer = ({
   isOpen,
   onClose,
 }: ConfiguratorDrawerProps) => {
-  const protein = useProtein();
-  const fats = useFats();
-  const carbs = useCarbs();
-  const { setProtein, setFats, setCarbs } = useActions();
+  const protein = useStore($protein);
+  const fats = useStore($fats);
+  const carbs = useStore($carbs);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      protein,
+      fats,
+      carbs,
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    setProtein(data.protein);
+    setFats(data.fats);
+    setCarbs(data.carbs);
+
+    onClose();
+  };
 
   return (
     <Drawer
@@ -38,50 +71,89 @@ export const ConfiguratorDrawer = ({
       onClose={onClose}
       size={'md'}
     >
-      <DrawerOverlay />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <DrawerOverlay />
 
-      <DrawerContent>
-        <DrawerCloseButton />
+        <DrawerContent>
+          <DrawerCloseButton />
 
-        <DrawerHeader>Настройте свой аккаунт</DrawerHeader>
+          <DrawerHeader>Настройте свой аккаунт</DrawerHeader>
 
-        <DrawerBody>
-          <Stack spacing={3}>
-            <div>
-              <FormLabel>Белки, гр.</FormLabel>
+          <DrawerBody>
+            <Stack spacing={3}>
+              <FormControl isInvalid={!!errors.protein}>
+                <FormLabel>Белки, гр.</FormLabel>
 
-              <NumberInput
-                value={protein}
-                onChange={setProtein}
-              >
-                <NumberInputField />
-              </NumberInput>
-            </div>
+                <Controller
+                  name={'protein'}
+                  control={control}
+                  rules={{
+                    required: { value: true, message: 'Обязательное поле' },
+                    min: { value: 1, message: 'Должно быть больше нуля' },
+                  }}
+                  render={({ field }) => (
+                    <NumberInput {...field}>
+                      <NumberInputField />
+                    </NumberInput>
+                  )}
+                />
 
-            <div>
-              <FormLabel>Жиры, гр.</FormLabel>
+                <FormErrorMessage>{errors.protein?.message}</FormErrorMessage>
+              </FormControl>
 
-              <NumberInput
-                value={fats}
-                onChange={setFats}
-              >
-                <NumberInputField />
-              </NumberInput>
-            </div>
+              <FormControl isInvalid={!!errors.fats}>
+                <FormLabel>Жиры, гр.</FormLabel>
 
-            <div>
-              <FormLabel>Углеводы, гр.</FormLabel>
+                <Controller
+                  name={'fats'}
+                  control={control}
+                  rules={{
+                    required: { value: true, message: 'Обязательное поле' },
+                    min: { value: 1, message: 'Должно быть больше нуля' },
+                  }}
+                  render={({ field }) => (
+                    <NumberInput {...field}>
+                      <NumberInputField />
+                    </NumberInput>
+                  )}
+                />
 
-              <NumberInput
-                value={carbs}
-                onChange={setCarbs}
-              >
-                <NumberInputField />
-              </NumberInput>
-            </div>
-          </Stack>
-        </DrawerBody>
-      </DrawerContent>
+                <FormErrorMessage>{errors.fats?.message}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl isInvalid={!!errors.carbs}>
+                <FormLabel>Углеводы, гр.</FormLabel>
+
+                <Controller
+                  name={'carbs'}
+                  control={control}
+                  rules={{
+                    required: { value: true, message: 'Обязательное поле' },
+                    min: { value: 1, message: 'Должно быть больше нуля' },
+                  }}
+                  render={({ field }) => (
+                    <NumberInput {...field}>
+                      <NumberInputField />
+                    </NumberInput>
+                  )}
+                />
+
+                <FormErrorMessage>{errors.carbs?.message}</FormErrorMessage>
+              </FormControl>
+            </Stack>
+          </DrawerBody>
+
+          <DrawerFooter>
+            <Button
+              colorScheme={'teal'}
+              mr={'auto'}
+              type={'submit'}
+            >
+              Сохранить
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </form>
     </Drawer>
   );
 };

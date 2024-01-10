@@ -24,13 +24,14 @@ import {
   IProduct,
   useActions as useProductActions,
 } from '@/entities/product';
-import { useCarbs, useFats, useProtein } from '@/features/configureProfile';
+import { useStore } from '@nanostores/react';
+import { $carbs, $fats, $protein } from '@/entities/config';
 
 export const Calculator = () => {
   const productsAmounts = useProductsAmounts();
-  const protein = useProtein();
-  const fats = useFats();
-  const carbs = useCarbs();
+  const protein = useStore($protein);
+  const fats = useStore($fats);
+  const carbs = useStore($carbs);
   const { getProductById } = useProductActions();
   const { setAmount } = useCalculatorActions();
 

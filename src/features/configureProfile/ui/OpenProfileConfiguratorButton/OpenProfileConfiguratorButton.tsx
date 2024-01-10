@@ -8,10 +8,12 @@ export const OpenProfileConfiguratorButton = () => {
     <>
       <Button onClick={onOpen}>Настройки</Button>
 
-      <ConfiguratorDrawer
-        isOpen={isOpen}
-        onClose={onClose}
-      />
+      {isOpen && (
+        <ConfiguratorDrawer
+          isOpen={isOpen}
+          onClose={onClose}
+        />
+      )}
     </>
   );
 };
