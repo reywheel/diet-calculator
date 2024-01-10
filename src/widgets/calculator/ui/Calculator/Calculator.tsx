@@ -24,11 +24,11 @@ import {
   IProduct,
   useActions as useProductActions,
 } from '@/entities/product';
-import { useStore } from '@nanostores/react';
-import { $nutrientsConfig } from '@/entities/config';
+import { configStore } from '@/entities/config';
+import { observer } from 'mobx-react-lite';
 
-export const Calculator = () => {
-  const { protein, fats, carbs } = useStore($nutrientsConfig);
+export const Calculator = observer(() => {
+  const { protein, fats, carbs } = configStore;
   const productsAmounts = useProductsAmounts();
   const { getProductById } = useProductActions();
   const { setAmount } = useCalculatorActions();
@@ -159,4 +159,4 @@ export const Calculator = () => {
       </Table>
     </TableContainer>
   );
-};
+});

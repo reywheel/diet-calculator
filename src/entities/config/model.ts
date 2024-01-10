@@ -1,34 +1,32 @@
-import { action } from 'nanostores';
-import { logger } from '@nanostores/logger';
-import { persistentAtom } from '@nanostores/persistent';
+import { makeAutoObservable } from 'mobx';
+import { makePersistable } from 'mobx-persist-store';
 
-type NutrientsConfig = {
-  protein: number;
-  fats: number;
-  carbs: number;
-};
+class ConfigStore {
+  protein = 0;
+  fats = 0;
+  carbs = 0;
 
-export const $nutrientsConfig = persistentAtom<NutrientsConfig>(
-  'nutrientsConfig',
-  {
-    protein: 0,
-    fats: 0,
-    carbs: 0,
-  },
-  {
-    encode: JSON.stringify,
-    decode: JSON.parse,
-  },
-);
+  constructor() {
+    makeAutoObservable(this);
 
-export const setNutrientsConfig = action(
-  $nutrientsConfig,
-  'setNutrientsConfig',
-  (store, newValue: NutrientsConfig) => {
-    store.set(newValue);
-  },
-);
+    makePersistable(this, {
+      name: 'configStore',
+      properties: ['protein', 'fats', 'carbs'],
+      storage: localStorage,
+    });
+  }
 
-logger({
-  nutrientsConfig: $nutrientsConfig,
-});
+  setProtein = (v: number) => {
+    this.protein = v;
+  };
+
+  setFats = (v: number) => {
+    this.fats = v;
+  };
+
+  setCarbs = (v: number) => {
+    this.carbs = v;
+  };
+}
+
+export const configStore = new ConfigStore();
