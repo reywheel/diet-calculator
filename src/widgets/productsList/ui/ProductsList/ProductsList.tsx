@@ -1,4 +1,4 @@
-import { useProducts } from '@/entities/product';
+import { $products } from '@/entities/product';
 import styles from './ProductsList.module.scss';
 import {
   Alert,
@@ -14,9 +14,10 @@ import {
 } from '@chakra-ui/react';
 import { DeleteProductButton } from '@/features/deleteProduct';
 import { EditProductButton } from '@/features/editProduct';
+import { useStore } from '@nanostores/react';
 
 export const ProductsList = () => {
-  const products = useProducts();
+  const products = useStore($products);
 
   return (
     <div className={styles.wrapper}>

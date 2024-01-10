@@ -7,6 +7,7 @@ type NutrientsConfig = {
   fats: number;
   carbs: number;
 };
+
 export const $nutrientsConfig = persistentAtom<NutrientsConfig>(
   'nutrientsConfig',
   {

@@ -1,7 +1,7 @@
 import { IconButton } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import cn from 'classnames';
-import { useActions } from '@/entities/product';
+import { deleteProduct } from '@/entities/product';
 
 interface DeleteProductButtonProps {
   productId: string;
@@ -12,10 +12,8 @@ export const DeleteProductButton = ({
   productId,
   className,
 }: DeleteProductButtonProps) => {
-  const { removeProduct } = useActions();
-
   const onClickButton = () => {
-    removeProduct(productId);
+    deleteProduct(productId);
   };
 
   return (

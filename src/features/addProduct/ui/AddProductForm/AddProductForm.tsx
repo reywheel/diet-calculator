@@ -12,17 +12,10 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { FormEventHandler, useState } from 'react';
-import {
-  IProduct,
-  IProductType,
-  useActions as useProductActions,
-} from '@/entities/product';
-import { nanoid } from 'nanoid';
+import { addProduct, IProduct, IProductType } from '@/entities/product';
 import styles from './AddProductForm.module.scss';
 
 export const AddProductForm = () => {
-  const { addProduct } = useProductActions();
-
   const [name, setName] = useState('');
   const [type, setType] = useState<IProductType>('gram');
   const [protein, setProtein] = useState('');
@@ -40,8 +33,7 @@ export const AddProductForm = () => {
   const onClickSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    const newProduct: IProduct = {
-      id: nanoid(),
+    const newProduct: Omit<IProduct, 'id'> = {
       name,
       type,
       protein: +protein,
