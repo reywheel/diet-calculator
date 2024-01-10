@@ -11,108 +11,172 @@ import {
   RadioGroup,
   Stack,
 } from '@chakra-ui/react';
-import { FormEventHandler } from 'react';
-import { IProduct, IProductType, productStore } from '@/entities/product';
+import { IProductType } from '@/entities/product';
 import styles from './EditProductForm.module.scss';
-import {
-  useActions as useEditProductActions,
-  useEditableProduct,
-} from '@/features/editProduct';
+import { editProductStore } from '@/features/editProduct';
+import { Controller, useForm } from 'react-hook-form';
+
+type FormData = {
+  name: string;
+  type: IProductType;
+  protein: string;
+  fats: string;
+  carbs: string;
+};
 
 export const EditProductForm = () => {
-  const editableProduct = useEditableProduct();
-  const { setEditableProduct } = useEditProductActions();
-  const { changeProduct } = productStore;
+  const { editableProduct, onSaveProduct, onCancel } = editProductStore;
 
-  const onChangeProduct = <T extends keyof IProduct>(
-    field: T,
-    value: IProduct[T],
-  ) => {
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormData>({
+    defaultValues: {
+      name: editableProduct?.name || '',
+      type: editableProduct?.type || 'gram',
+      protein: editableProduct?.protein.toString() || '',
+      fats: editableProduct?.fats.toString() || '',
+      carbs: editableProduct?.carbs.toString() || '',
+    },
+  });
+
+  const onClickSubmit = (data: FormData) => {
     if (editableProduct)
-      setEditableProduct({ ...editableProduct, [field]: value });
-  };
-
-  const onClickSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-
-    if (!editableProduct) throw new Error('Нет редактируемого продукта');
-
-    changeProduct(editableProduct);
-    setEditableProduct(null);
+      onSaveProduct({
+        ...editableProduct,
+        ...data,
+        protein: +data.protein,
+        fats: +data.fats,
+        carbs: +data.carbs,
+      });
   };
 
   if (!editableProduct) return null;
 
   return (
-    <form onSubmit={onClickSubmit}>
+    <form onSubmit={handleSubmit(onClickSubmit)}>
       <Stack spacing={6}>
         <Heading size={'lg'}>Изменение продукта</Heading>
 
-        <FormControl>
+        <FormControl isInvalid={!!errors.name}>
           <FormLabel>Название</FormLabel>
 
-          <Input
-            value={editableProduct.name}
-            variant={'outline'}
-            onChange={(e) => onChangeProduct('name', e.target.value)}
+          <Controller
+            name={'name'}
+            control={control}
+            rules={{ required: { value: true, message: 'Обязательное поле' } }}
+            render={({ field }) => (
+              <Input
+                {...field}
+                variant={'outline'}
+              />
+            )}
           />
+
+          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
         </FormControl>
 
-        <FormControl>
+        <FormControl isInvalid={!!errors.type}>
           <FormLabel>Измерение продукта</FormLabel>
 
-          <RadioGroup
-            name="form-name"
-            value={editableProduct.type}
-            onChange={(v) => onChangeProduct('type', v as IProductType)}
-          >
-            <Stack
-              spacing={5}
-              direction="row"
-            >
-              <Radio value={'gram'}>Граммами</Radio>
-              <Radio value={'piece'}>Штуками</Radio>
-            </Stack>
-          </RadioGroup>
+          <Controller
+            name={'type'}
+            control={control}
+            rules={{ required: { value: true, message: 'Обязательное поле' } }}
+            render={({ field }) => (
+              <RadioGroup {...field}>
+                <Stack
+                  spacing={5}
+                  direction="row"
+                >
+                  <Radio value={'gram'}>Граммами</Radio>
+                  <Radio value={'piece'}>Штуками</Radio>
+                </Stack>
+              </RadioGroup>
+            )}
+          />
 
-          <FormErrorMessage>ты чё, а?</FormErrorMessage>
+          <FormErrorMessage>{errors.type?.message}</FormErrorMessage>
         </FormControl>
 
         <div className={styles.nutrients}>
-          <FormControl>
+          <FormControl isInvalid={!!errors.protein}>
             <FormLabel>Белки, гр.</FormLabel>
 
-            <NumberInput
-              value={editableProduct.protein}
-              variant={'outline'}
-              onChange={(v) => onChangeProduct('protein', +v)}
-            >
-              <NumberInputField />
-            </NumberInput>
+            <Controller
+              name={'protein'}
+              control={control}
+              rules={{
+                required: { value: true, message: 'Обязательное поле' },
+                min: {
+                  value: 0,
+                  message: 'Должно быть больше либо равно нулю',
+                },
+              }}
+              render={({ field }) => (
+                <NumberInput
+                  variant={'outline'}
+                  {...field}
+                >
+                  <NumberInputField />
+                </NumberInput>
+              )}
+            />
+
+            <FormErrorMessage>{errors.protein?.message}</FormErrorMessage>
           </FormControl>
 
-          <FormControl>
+          <FormControl isInvalid={!!errors.fats}>
             <FormLabel>Жиры, гр.</FormLabel>
 
-            <NumberInput
-              value={editableProduct.fats}
-              variant={'outline'}
-              onChange={(v) => onChangeProduct('fats', +v)}
-            >
-              <NumberInputField />
-            </NumberInput>
+            <Controller
+              name={'fats'}
+              control={control}
+              rules={{
+                required: { value: true, message: 'Обязательное поле' },
+                min: {
+                  value: 0,
+                  message: 'Должно быть больше либо равно нулю',
+                },
+              }}
+              render={({ field }) => (
+                <NumberInput
+                  variant={'outline'}
+                  {...field}
+                >
+                  <NumberInputField />
+                </NumberInput>
+              )}
+            />
+
+            <FormErrorMessage>{errors.fats?.message}</FormErrorMessage>
           </FormControl>
 
-          <FormControl>
+          <FormControl isInvalid={!!errors.carbs}>
             <FormLabel>Углеводы, гр.</FormLabel>
 
-            <NumberInput
-              value={editableProduct.carbs}
-              variant={'outline'}
-              onChange={(v) => onChangeProduct('carbs', +v)}
-            >
-              <NumberInputField />
-            </NumberInput>
+            <Controller
+              name={'carbs'}
+              control={control}
+              rules={{
+                required: { value: true, message: 'Обязательное поле' },
+                min: {
+                  value: 0,
+                  message: 'Должно быть больше либо равно нулю',
+                },
+              }}
+              render={({ field }) => (
+                <NumberInput
+                  variant={'outline'}
+                  {...field}
+                >
+                  <NumberInputField />
+                </NumberInput>
+              )}
+            />
+
+            <FormErrorMessage>{errors.carbs?.message}</FormErrorMessage>
           </FormControl>
         </div>
 
@@ -125,7 +189,7 @@ export const EditProductForm = () => {
             Сохранить
           </Button>
 
-          <Button onClick={() => setEditableProduct(null)}>Отменить</Button>
+          <Button onClick={onCancel}>Отменить</Button>
         </div>
       </Stack>
     </form>

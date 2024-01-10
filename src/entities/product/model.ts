@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 import { nanoid } from 'nanoid';
 
-class ProductStore {
+export class ProductStore {
   products: IProduct[] = [];
 
   constructor() {
