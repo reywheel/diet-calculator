@@ -12,7 +12,7 @@ export class ProductStore {
     makePersistable(this, {
       name: 'productStore',
       properties: ['products'],
-      storage: window.localStorage,
+      storage: localStorage,
     });
   }
 

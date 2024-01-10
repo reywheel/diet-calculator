@@ -1,34 +1,28 @@
 import { Button } from '@chakra-ui/react';
-import { useActions as useCalculatorActions } from '@/widgets/calculator';
-import { productStore } from '@/entities/product';
+import { addProductInCalculatorModel } from '../../model.ts';
+import { observer } from 'mobx-react-lite';
 
 interface AddProductInCalculatorButtonProps {
   productId: string;
   className?: string;
 }
 
-export const AddProductInCalculatorButton = ({
-  productId,
-  className,
-}: AddProductInCalculatorButtonProps) => {
-  const { getProductById } = productStore;
-  const { addProduct } = useCalculatorActions();
+export const AddProductInCalculatorButton = observer(
+  ({ productId, className }: AddProductInCalculatorButtonProps) => {
+    const { onAddProduct } = addProductInCalculatorModel;
 
-  const onClickButton = () => {
-    const product = getProductById(productId);
+    const onClickButton = () => {
+      onAddProduct(productId);
+    };
 
-    if (!product) throw new Error('Добавляемый продукт не найден');
-
-    addProduct(product);
-  };
-
-  return (
-    <Button
-      className={className}
-      color={'green'}
-      onClick={onClickButton}
-    >
-      Добавить
-    </Button>
-  );
-};
+    return (
+      <Button
+        className={className}
+        color={'green'}
+        onClick={onClickButton}
+      >
+        Добавить
+      </Button>
+    );
+  },
+);
