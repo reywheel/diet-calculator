@@ -1,4 +1,4 @@
-import { IProduct } from '../../model/types.ts';
+import { IProduct } from '../../types.ts';
 import cn from 'classnames';
 import styles from './ProductRow.module.scss';
 import { CardBody, Card, Text } from '@chakra-ui/react';

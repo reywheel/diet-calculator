@@ -1,4 +1,4 @@
-import { $products } from '@/entities/product';
+import { productStore } from '@/entities/product';
 import styles from './ProductsList.module.scss';
 import {
   Alert,
@@ -14,10 +14,10 @@ import {
 } from '@chakra-ui/react';
 import { DeleteProductButton } from '@/features/deleteProduct';
 import { EditProductButton } from '@/features/editProduct';
-import { useStore } from '@nanostores/react';
+import { observer } from 'mobx-react-lite';
 
-export const ProductsList = () => {
-  const products = useStore($products);
+export const ProductsList = observer(() => {
+  const { products } = productStore;
 
   return (
     <div className={styles.wrapper}>
@@ -71,4 +71,4 @@ export const ProductsList = () => {
       )}
     </div>
   );
-};
+});

@@ -12,11 +12,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { FormEventHandler } from 'react';
-import {
-  IProduct,
-  IProductType,
-  useActions as useProductActions,
-} from '@/entities/product';
+import { IProduct, IProductType, productStore } from '@/entities/product';
 import styles from './EditProductForm.module.scss';
 import {
   useActions as useEditProductActions,
@@ -26,7 +22,7 @@ import {
 export const EditProductForm = () => {
   const editableProduct = useEditableProduct();
   const { setEditableProduct } = useEditProductActions();
-  const { changeProduct } = useProductActions();
+  const { changeProduct } = productStore;
 
   const onChangeProduct = <T extends keyof IProduct>(
     field: T,

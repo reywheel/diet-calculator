@@ -1,9 +1,9 @@
-import { ProductRow, useProducts } from '@/entities/product';
+import { ProductRow, productStore } from '@/entities/product';
 import styles from './ProductsPicker.module.scss';
 import { AddProductInCalculatorButton } from '@/features/addProductInCalculator';
 
 export const ProductsPicker = () => {
-  const products = useProducts();
+  const { products } = productStore;
 
   return (
     <div className={styles.picker}>

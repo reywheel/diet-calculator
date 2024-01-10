@@ -12,10 +12,11 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { FormEventHandler, useState } from 'react';
-import { addProduct, IProduct, IProductType } from '@/entities/product';
+import { IProduct, IProductType, productStore } from '@/entities/product';
 import styles from './AddProductForm.module.scss';
+import { observer } from 'mobx-react-lite';
 
-export const AddProductForm = () => {
+export const AddProductForm = observer(() => {
   const [name, setName] = useState('');
   const [type, setType] = useState<IProductType>('gram');
   const [protein, setProtein] = useState('');
@@ -41,7 +42,7 @@ export const AddProductForm = () => {
       carbs: +carbs,
     };
 
-    addProduct(newProduct);
+    productStore.addProduct(newProduct);
 
     resetFormState();
   };
@@ -128,4 +129,4 @@ export const AddProductForm = () => {
       </Stack>
     </form>
   );
-};
+});

@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import { useActions as useCalculatorActions } from '@/widgets/calculator';
-import { useActions } from '@/entities/product';
+import { productStore } from '@/entities/product';
 
 interface AddProductInCalculatorButtonProps {
   productId: string;
@@ -11,7 +11,7 @@ export const AddProductInCalculatorButton = ({
   productId,
   className,
 }: AddProductInCalculatorButtonProps) => {
-  const { getProductById } = useActions();
+  const { getProductById } = productStore;
   const { addProduct } = useCalculatorActions();
 
   const onClickButton = () => {

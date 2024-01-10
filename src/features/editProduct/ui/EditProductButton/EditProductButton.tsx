@@ -1,7 +1,7 @@
 import { IconButton } from '@chakra-ui/react';
 import { EditIcon } from '@chakra-ui/icons';
 import cn from 'classnames';
-import { useActions as useProductActions } from '@/entities/product';
+import { productStore } from '@/entities/product';
 import { useActions as useEditProductActions } from '@/features/editProduct';
 
 interface EditProductButtonProps {
@@ -13,7 +13,7 @@ export const EditProductButton = ({
   productId,
   className,
 }: EditProductButtonProps) => {
-  const { getProductById } = useProductActions();
+  const { getProductById } = productStore;
   const { setEditableProduct } = useEditProductActions();
 
   const onClickButton = () => {

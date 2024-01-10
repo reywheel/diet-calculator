@@ -22,7 +22,7 @@ import _ from 'lodash';
 import {
   calculateTotalNutrientsAmounts,
   IProduct,
-  useActions as useProductActions,
+  productStore,
 } from '@/entities/product';
 import { configStore } from '@/entities/config';
 import { observer } from 'mobx-react-lite';
@@ -30,7 +30,7 @@ import { observer } from 'mobx-react-lite';
 export const Calculator = observer(() => {
   const { protein, fats, carbs } = configStore;
   const productsAmounts = useProductsAmounts();
-  const { getProductById } = useProductActions();
+  const { getProductById } = productStore;
   const { setAmount } = useCalculatorActions();
 
   const preparedData = useMemo(() => {

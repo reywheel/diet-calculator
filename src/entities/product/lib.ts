@@ -1,4 +1,4 @@
-import { IProduct } from './model/types.ts';
+import { IProduct } from './types.ts';
 import _ from 'lodash';
 
 export const getProductInitialAmount = (product: IProduct): number => {
