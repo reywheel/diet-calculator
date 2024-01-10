@@ -1,24 +1,33 @@
-import { action, atom } from 'nanostores';
+import { action } from 'nanostores';
 import { logger } from '@nanostores/logger';
+import { persistentAtom } from '@nanostores/persistent';
 
-export const $protein = atom('');
-export const $fats = atom('');
-export const $carbs = atom('');
+type NutrientsConfig = {
+  protein: number;
+  fats: number;
+  carbs: number;
+};
+export const $nutrientsConfig = persistentAtom<NutrientsConfig>(
+  'nutrientsConfig',
+  {
+    protein: 0,
+    fats: 0,
+    carbs: 0,
+  },
+  {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+  },
+);
 
-export const setProtein = action($protein, 'setProtein', (store, v: string) => {
-  store.set(v);
-});
-
-export const setFats = action($fats, 'setFats', (store, v: string) => {
-  store.set(v);
-});
-
-export const setCarbs = action($carbs, 'setCarbs', (store, v: string) =>
-  store.set(v),
+export const setNutrientsConfig = action(
+  $nutrientsConfig,
+  'setNutrientsConfig',
+  (store, newValue: NutrientsConfig) => {
+    store.set(newValue);
+  },
 );
 
 logger({
-  protein: $protein,
-  fats: $fats,
-  carbs: $carbs,
+  nutrientsConfig: $nutrientsConfig,
 });

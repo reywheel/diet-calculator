@@ -25,13 +25,11 @@ import {
   useActions as useProductActions,
 } from '@/entities/product';
 import { useStore } from '@nanostores/react';
-import { $carbs, $fats, $protein } from '@/entities/config';
+import { $nutrientsConfig } from '@/entities/config';
 
 export const Calculator = () => {
+  const { protein, fats, carbs } = useStore($nutrientsConfig);
   const productsAmounts = useProductsAmounts();
-  const protein = useStore($protein);
-  const fats = useStore($fats);
-  const carbs = useStore($carbs);
   const { getProductById } = useProductActions();
   const { setAmount } = useCalculatorActions();
 

@@ -14,14 +14,7 @@ import {
   NumberInputField,
   Stack,
 } from '@chakra-ui/react';
-import {
-  $protein,
-  $carbs,
-  $fats,
-  setProtein,
-  setFats,
-  setCarbs,
-} from '@/entities/config';
+import { setNutrientsConfig, $nutrientsConfig } from '@/entities/config';
 import { useStore } from '@nanostores/react';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -40,9 +33,7 @@ export const ConfiguratorDrawer = ({
   isOpen,
   onClose,
 }: ConfiguratorDrawerProps) => {
-  const protein = useStore($protein);
-  const fats = useStore($fats);
-  const carbs = useStore($carbs);
+  const { protein, fats, carbs } = useStore($nutrientsConfig);
 
   const {
     control,
@@ -50,16 +41,18 @@ export const ConfiguratorDrawer = ({
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      protein,
-      fats,
-      carbs,
+      protein: protein.toString(),
+      fats: fats.toString(),
+      carbs: carbs.toString(),
     },
   });
 
   const onSubmit = (data: FormData) => {
-    setProtein(data.protein);
-    setFats(data.fats);
-    setCarbs(data.carbs);
+    setNutrientsConfig({
+      protein: +data.protein,
+      fats: +data.fats,
+      carbs: +data.carbs,
+    });
 
     onClose();
   };
