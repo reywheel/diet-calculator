@@ -18,7 +18,10 @@ export const ProductRow = ({
   renderActions,
 }: ProductRowProps) => {
   return (
-    <Card className={cn(styles.wrapper, className)}>
+    <Card
+      className={cn(styles.wrapper, className)}
+      variant={'outline'}
+    >
       <CardBody
         p={3}
         display={'flex'}
