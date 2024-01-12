@@ -1,13 +1,15 @@
-import { ProductRow, productStore } from '@/entities/product';
+import { ProductRow } from '@/entities/product';
 import styles from './ProductsPicker.module.scss';
+import { productsPickerStore } from '../../model.ts';
 import { AddProductInCalculatorButton } from '@/features/addProductInCalculator';
+import { observer } from 'mobx-react-lite';
 
-export const ProductsPicker = () => {
-  const { products } = productStore;
+export const ProductsPicker = observer(() => {
+  const { productsListForPick } = productsPickerStore;
 
   return (
     <div className={styles.picker}>
-      {products.map((product) => (
+      {productsListForPick.map((product) => (
         <ProductRow
           key={product.id}
           product={product}
@@ -22,4 +24,4 @@ export const ProductsPicker = () => {
       ))}
     </div>
   );
-};
+});
