@@ -1,6 +1,7 @@
 import { IconButton } from '@chakra-ui/react';
 import { EditIcon } from '@chakra-ui/icons';
 import cn from 'classnames';
+
 import { editProductStore } from '@/features/editProduct';
 
 interface EditProductButtonProps {

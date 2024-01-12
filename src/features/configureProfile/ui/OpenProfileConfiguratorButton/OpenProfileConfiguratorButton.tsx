@@ -1,4 +1,5 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
+
 import { ConfiguratorDrawer } from '../../ui/ConfiguratorDrawer';
 
 export const OpenProfileConfiguratorButton = () => {

@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
 import { observer } from 'mobx-react-lite';
+
 import { configStore } from '@/entities/config';
 
 interface ConfiguratorDrawerProps {

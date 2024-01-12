@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
-import styles from './UiContainer.module.scss';
 import cn from 'classnames';
+
+import styles from './UiContainer.module.scss';
 
 interface UiContainerProps {
   children: ReactNode;

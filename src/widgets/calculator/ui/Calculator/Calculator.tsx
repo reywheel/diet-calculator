@@ -14,9 +14,10 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { calculatorStore } from '../../model.ts';
 import { observer } from 'mobx-react-lite';
 import { DeleteIcon } from '@chakra-ui/icons';
+
+import { calculatorStore } from '../../model.ts';
 
 export const Calculator = observer(() => {
   const {

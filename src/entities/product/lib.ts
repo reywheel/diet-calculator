@@ -1,5 +1,6 @@
-import { IProduct } from './types.ts';
 import _ from 'lodash';
+
+import { IProduct } from './types.ts';
 
 export const getProductInitialAmount = (product: IProduct): number => {
   switch (product.type) {

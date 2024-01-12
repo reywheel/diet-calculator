@@ -1,6 +1,7 @@
 import { IconButton } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import cn from 'classnames';
+
 import { productStore } from '@/entities/product';
 
 interface DeleteProductButtonProps {

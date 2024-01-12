@@ -1,5 +1,3 @@
-import { productStore } from '@/entities/product';
-import styles from './ProductsList.module.scss';
 import {
   Alert,
   AlertIcon,
@@ -12,9 +10,14 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { observer } from 'mobx-react-lite';
+
+import { productStore } from '@/entities/product';
 import { DeleteProductButton } from '@/features/deleteProduct';
 import { EditProductButton } from '@/features/editProduct';
-import { observer } from 'mobx-react-lite';
+
+import styles from './ProductsList.module.scss';
+
 
 export const ProductsList = observer(() => {
   const { products } = productStore;

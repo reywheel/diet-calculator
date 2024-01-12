@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {
   calculateTotalNutrientsAmount,
   IProduct,
@@ -9,7 +11,6 @@ import {
   ProductsAmountsStore,
 } from '@/entities/productAmount';
 import { configStore, ConfigStore } from '@/entities/config';
-import _ from 'lodash';
 
 class CalculatorStore {
   configStore: ConfigStore;

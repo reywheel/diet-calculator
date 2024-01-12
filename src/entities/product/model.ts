@@ -1,7 +1,8 @@
-import { IProduct } from '@/entities/product/types.ts';
 import { makeAutoObservable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 import { nanoid } from 'nanoid';
+
+import { IProduct } from '@/entities/product/types.ts';
 
 export class ProductStore {
   products: IProduct[] = [];

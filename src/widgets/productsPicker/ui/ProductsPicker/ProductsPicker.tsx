@@ -1,8 +1,11 @@
-import { ProductRow } from '@/entities/product';
-import styles from './ProductsPicker.module.scss';
-import { productsPickerStore } from '../../model.ts';
-import { AddProductInCalculatorButton } from '@/features/addProductInCalculator';
 import { observer } from 'mobx-react-lite';
+
+import { ProductRow } from '@/entities/product';
+import { AddProductInCalculatorButton } from '@/features/addProductInCalculator';
+
+import { productsPickerStore } from '../../model.ts';
+
+import styles from './ProductsPicker.module.scss';
 
 export const ProductsPicker = observer(() => {
   const { productsListForPick } = productsPickerStore;

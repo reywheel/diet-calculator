@@ -1,5 +1,6 @@
-import { IProduct, productStore, ProductStore } from '@/entities/product';
 import { makeAutoObservable } from 'mobx';
+
+import { IProduct, productStore, ProductStore } from '@/entities/product';
 
 class EditProductStore {
   productStore: ProductStore;

@@ -1,7 +1,8 @@
-import { TProductsAmounts } from './types.ts';
 import { makeAutoObservable } from 'mobx';
 import _ from 'lodash';
 import { makePersistable } from 'mobx-persist-store';
+
+import { TProductsAmounts } from './types.ts';
 
 export class ProductsAmountsStore {
   productsAmounts: TProductsAmounts = {};

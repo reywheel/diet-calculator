@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx';
+
 import { productStore, ProductStore } from '@/entities/product';
 import {
   productsAmountsStore,

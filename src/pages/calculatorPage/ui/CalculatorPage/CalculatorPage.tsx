@@ -1,7 +1,8 @@
 import { UiContainer, UiPage } from '@/shared/ui';
-import styles from './CalculatorPage.module.scss';
 import { Calculator } from '@/widgets/calculator';
 import { ProductsPicker } from '@/widgets/productsPicker';
+
+import styles from './CalculatorPage.module.scss';
 
 export const CalculatorPage = () => {
   return (

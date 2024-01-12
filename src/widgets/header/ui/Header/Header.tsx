@@ -1,8 +1,10 @@
-import styles from './Header.module.scss';
-import { UiContainer } from '@/shared/ui';
-import { OpenProfileConfiguratorButton } from '@/features/configureProfile';
 import { Link } from 'react-router-dom';
 import { Button, Divider } from '@chakra-ui/react';
+
+import { UiContainer } from '@/shared/ui';
+import { OpenProfileConfiguratorButton } from '@/features/configureProfile';
+
+import styles from './Header.module.scss';
 
 export const Header = () => {
   return (

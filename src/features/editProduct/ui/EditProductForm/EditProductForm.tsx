@@ -11,10 +11,12 @@ import {
   RadioGroup,
   Stack,
 } from '@chakra-ui/react';
-import { IProductType } from '@/entities/product';
-import styles from './EditProductForm.module.scss';
-import { editProductStore } from '@/features/editProduct';
 import { Controller, useForm } from 'react-hook-form';
+
+import { IProductType } from '@/entities/product';
+import { editProductStore } from '@/features/editProduct';
+
+import styles from './EditProductForm.module.scss';
 
 type FormData = {
   name: string;

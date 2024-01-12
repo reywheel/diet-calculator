@@ -14,9 +14,6 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@nanostores/logger": "^0.2.4",
-    "@nanostores/persistent": "^0.9.1",
-    "@nanostores/react": "^0.7.1",
     "classnames": "^2.5.1",
     "framer-motion": "^10.17.9",
     "lodash": "^4.17.21",
@@ -24,12 +21,10 @@
     "mobx-persist-store": "^1.1.4",
     "mobx-react-lite": "^4.0.5",
     "nanoid": "^5.0.4",
-    "nanostores": "^0.9.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.3",
-    "react-router-dom": "^6.21.1",
-    "zustand": "^4.4.7"
+    "react-router-dom": "^6.21.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.7",
@@ -40,6 +35,8 @@
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "prettier": "^3.1.1",

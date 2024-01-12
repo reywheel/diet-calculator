@@ -12,9 +12,11 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { FormEventHandler, useState } from 'react';
-import { IProduct, IProductType, productStore } from '@/entities/product';
-import styles from './AddProductForm.module.scss';
 import { observer } from 'mobx-react-lite';
+
+import { IProduct, IProductType, productStore } from '@/entities/product';
+
+import styles from './AddProductForm.module.scss';
 
 export const AddProductForm = observer(() => {
   const [name, setName] = useState('');

@@ -1,6 +1,7 @@
 import { Button } from '@chakra-ui/react';
-import { addProductInCalculatorModel } from '../../model.ts';
 import { observer } from 'mobx-react-lite';
+
+import { addProductInCalculatorModel } from '../../model.ts';
 
 interface AddProductInCalculatorButtonProps {
   productId: string;

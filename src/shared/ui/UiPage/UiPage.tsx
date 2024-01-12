@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import cn from 'classnames';
+
 import styles from './UiPage.module.scss';
 
 interface UiPageProps {
