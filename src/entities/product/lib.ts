@@ -12,7 +12,7 @@ export const getProductInitialAmount = (product: IProduct): number => {
   }
 };
 
-export const calculateTotalNutrientsAmounts = (
+export const calculateTotalNutrientsAmount = (
   product: IProduct,
   amount: number,
 ): {
@@ -23,14 +23,9 @@ export const calculateTotalNutrientsAmounts = (
   const multiplier =
     product.type === 'piece' ? amount : _.round(amount / 100, 2);
 
-  return _.chain(product)
-    .pick(['protein', 'fats', 'carbs'])
-    .transform(
-      (result, value, key) => {
-        // @ts-expect-error не сходятся типы
-        result[key] = _.round(value * multiplier, 2);
-      },
-      { protein: 0, fats: 0, carbs: 0 },
-    )
-    .value();
+  return {
+    protein: _.round(product.protein * multiplier, 2),
+    fats: _.round(product.fats * multiplier, 2),
+    carbs: _.round(product.carbs * multiplier, 2),
+  };
 };

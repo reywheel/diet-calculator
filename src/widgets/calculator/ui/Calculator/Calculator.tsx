@@ -1,4 +1,5 @@
 import {
+  IconButton,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -8,16 +9,24 @@ import {
   TableContainer,
   Tbody,
   Td,
-  // Tfoot,
+  Tfoot,
   Th,
   Thead,
   Tr,
 } from '@chakra-ui/react';
 import { calculatorStore } from '../../model.ts';
 import { observer } from 'mobx-react-lite';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 export const Calculator = observer(() => {
-  const { productsAmountsList } = calculatorStore;
+  const {
+    productsAmountsList,
+    nutrientsAmount,
+    nutrientsGoal,
+    isNutrientsEnough,
+    onChangeProductAmount,
+    onDeleteProductAmount,
+  } = calculatorStore;
 
   return (
     <TableContainer overflowY={'auto'}>
@@ -34,6 +43,7 @@ export const Calculator = observer(() => {
             <Th isNumeric>Жиры</Th>
             <Th isNumeric>Углеводы</Th>
             <Th isNumeric>Кол-во</Th>
+            <Th />
           </Tr>
         </Thead>
 
@@ -44,6 +54,7 @@ export const Calculator = observer(() => {
               <Td isNumeric>{productAmount.protein}</Td>
               <Td isNumeric>{productAmount.fats}</Td>
               <Td isNumeric>{productAmount.carbs}</Td>
+
               <Td isNumeric>
                 <NumberInput
                   maxW={100}
@@ -51,7 +62,9 @@ export const Calculator = observer(() => {
                   value={productAmount.amount}
                   size={'sm'}
                   ml={'auto'}
-                  onChange={() => {}}
+                  onChange={(_, v) =>
+                    onChangeProductAmount(productAmount.id, v)
+                  }
                 >
                   <NumberInputField />
                   <NumberInputStepper>
@@ -60,49 +73,59 @@ export const Calculator = observer(() => {
                   </NumberInputStepper>
                 </NumberInput>
               </Td>
+
+              <Td>
+                <IconButton
+                  colorScheme={'red'}
+                  size={'sm'}
+                  aria-label={'delete product'}
+                  icon={<DeleteIcon />}
+                  onClick={() => onDeleteProductAmount(productAmount.id)}
+                />
+              </Td>
             </Tr>
           ))}
         </Tbody>
 
-        {/*<Tfoot*/}
-        {/*  position={'sticky'}*/}
-        {/*  bottom={0}*/}
-        {/*>*/}
-        {/*  <Tr>*/}
-        {/*    <Th>Всего:</Th>*/}
+        <Tfoot
+          position={'sticky'}
+          bottom={0}
+        >
+          <Tr>
+            <Th>Всего:</Th>
 
-        {/*    <Th*/}
-        {/*      isNumeric*/}
-        {/*      color={isNutrientsEnough.protein ? 'green' : 'red'}*/}
-        {/*    >*/}
-        {/*      {totalNutrientsAmounts.protein}*/}
-        {/*    </Th>*/}
+            <Th
+              isNumeric
+              color={isNutrientsEnough.protein ? 'green' : 'red'}
+            >
+              {nutrientsAmount.protein}
+            </Th>
 
-        {/*    <Th*/}
-        {/*      isNumeric*/}
-        {/*      color={isNutrientsEnough.fats ? 'green' : 'red'}*/}
-        {/*    >*/}
-        {/*      {totalNutrientsAmounts.fats}*/}
-        {/*    </Th>*/}
+            <Th
+              isNumeric
+              color={isNutrientsEnough.fats ? 'green' : 'red'}
+            >
+              {nutrientsAmount.fats}
+            </Th>
 
-        {/*    <Th*/}
-        {/*      isNumeric*/}
-        {/*      color={isNutrientsEnough.carbs ? 'green' : 'red'}*/}
-        {/*    >*/}
-        {/*      {totalNutrientsAmounts.carbs}*/}
-        {/*    </Th>*/}
+            <Th
+              isNumeric
+              color={isNutrientsEnough.carbs ? 'green' : 'red'}
+            >
+              {nutrientsAmount.carbs}
+            </Th>
 
-        {/*    <Th></Th>*/}
-        {/*  </Tr>*/}
+            <Th></Th>
+          </Tr>
 
-        {/*  <Tr>*/}
-        {/*    <Th>Цель:</Th>*/}
-        {/*    <Th isNumeric>{protein}</Th>*/}
-        {/*    <Th isNumeric>{fats}</Th>*/}
-        {/*    <Th isNumeric>{carbs}</Th>*/}
-        {/*    <Th></Th>*/}
-        {/*  </Tr>*/}
-        {/*</Tfoot>*/}
+          <Tr>
+            <Th>Цель:</Th>
+            <Th isNumeric>{nutrientsGoal.protein}</Th>
+            <Th isNumeric>{nutrientsGoal.fats}</Th>
+            <Th isNumeric>{nutrientsGoal.carbs}</Th>
+            <Th></Th>
+          </Tr>
+        </Tfoot>
       </Table>
     </TableContainer>
   );

@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
-class ConfigStore {
+export class ConfigStore {
   protein = 0;
   fats = 0;
   carbs = 0;
